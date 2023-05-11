@@ -17,8 +17,8 @@ use App\Http\Controllers\LifeCycleTestController;
 
 
 
-Route::get('/a', function () {
-    return "やれやれだぜ";
+Route::get('/b', function () {
+    return "やれやれだわ";
 });
 Route::get('/', function () {
     return view('user.welcome');
