@@ -22,19 +22,20 @@ class OwnersController extends Controller
      */
     public function index()
     {
-        $date_now=Carbon::now();
-        $date_parse=Carbon::parse(now());
-        echo $date_now->year;
-        echo '<br>';
-        echo $date_parse;
-        $e_all=Owner::all(); // 型はIlluminate\Database\Eloquent\Collection
-        $q_get=DB::table('owners')->select('name','created_at')->get(); // 型はIlluminate\Support\Collection
+        // $date_now=Carbon::now();
+        // $date_parse=Carbon::parse(now());
+        // echo $date_now->year;
+        // echo '<br>';
+        // echo $date_parse;
+        // $e_all=Owner::all(); // 型はIlluminate\Database\Eloquent\Collection
+        // $q_get=DB::table('owners')->select('name','created_at')->get(); // 型はIlluminate\Support\Collection
         // $q_first=DB::table('owners')->select('name')->first(); // 型はphpのスタンダードクラス
         // $c_test=collect([
         //     'name'=>'てすと'
         // ]); // 型はIlluminate\Support\Collection
         // dd($e_all,$q_get,$q_first,$c_test);
-        return view('admin.owners.index',compact('e_all','q_get'));
+        $owners=Owner::select('name','email','created_at')->get();
+        return view('admin.owners.index',compact('owners'));
     }
 
     /**
@@ -44,7 +45,7 @@ class OwnersController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.owners.create');
     }
 
     /**
