@@ -66,6 +66,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                {{$owners->links()}}
                             </div>
                         </div>
                     </section>
@@ -93,5 +94,3 @@
         }
     </script>
 </x-app-layout>
-
-
