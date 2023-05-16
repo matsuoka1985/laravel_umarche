@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Storage;
 use InterventionImage;
 
 class ImageService{
+    /**
+     * 画像ファイルそのものをstorage/app/public/{任意のディレクトリ}に保存し、その画像のファイル名を保存パスも含め戻り値として返す関数。
+     */
     public static function upload($imageFile,$folderName){
         $fileName = (string)date('Y-m-d H:i:s') . uniqid(rand() . '_'); //ファイル名を生成。
         $extension = $imageFile->extension(); //アップロードされたファイルから拡張子を取得。

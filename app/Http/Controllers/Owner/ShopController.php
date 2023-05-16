@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
+use App\Models\Owner;
 use Illuminate\Support\Facades\Storage;
 use InterventionImage;
 use App\Http\Requests\UploadImageRequest;
@@ -48,11 +49,27 @@ class ShopController extends Controller
     }
 
     public function update(UploadImageRequest $request,$id){
+        $request->validate([
+            'name' => ['required', 'string', 'max:50'],
+            'information' => ['required', 'string',  'max:1000' ],
+            'is_selling' => ['required'],
+        ]);
 
         $imageFile=$request->image;
         if(!is_null($imageFile) && $imageFile->isValid() ){
             $fileNameToStore=ImageService::upload($imageFile,'shops');
         }
-        return redirect()->route('owner.shops.index');
+
+        $shop=Shop::findOrFail($id);
+        $shop->name=$request->name;
+        $shop->information=$request->information;
+        $shop->is_selling=$request->is_selling;
+        if(!is_null($imageFile)&& $imageFile->isValid()){
+            $shop->filename=$fileNameToStore;
+        }
+        $shop->save();
+
+
+        return redirect()->route('owner.shops.index')->with(['message'=>'店舗情報を更新しました。','status'=>'info']);
     }
 }
