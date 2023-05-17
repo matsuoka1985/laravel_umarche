@@ -16,14 +16,14 @@ class ImageController extends Controller
     public function __construct()
     {
         $this->middleware('auth:owners');
-
+        //ルーティングに記述したミドルウェアは、単にownerでログインしているかどうかを判定するだけのためのもの。以下のミドルウェアは、urlパラメーターに渡ってきたidを持つデータが現在ログインしているユーザーと紐付くものかどうかを判定する。もし紐づいていなければそのデータについて閲覧も編集も削除も許されないので弾くようにするのが以下のミドルウェアの記述。
         $this->middleware(function ($request, $next) {
 
-            $id = $request->route()->parameter('image');
-            if (!is_null($id)) {
-                $imagesOwnerId = Image::findOrFail($id)->owner->id;
+            $id = $request->route()->parameter('image'); // urlパラメーターを取得
+            if (!is_null($id)) { //urlパラメーターが取得できたら
+                $imagesOwnerId = Image::findOrFail($id)->owner->id; //そのurlパラメーターに対応するデータを取得しさらにそのデータのユーザーidカラムのデータを取得。
                 $imageId = (int)$imagesOwnerId;
-                if ($imageId !== Auth::id()) {
+                if ($imageId !== Auth::id()) { //上で取得したidと現在ログイン中のユーザーのidが一致しているかどうか検証。
                     abort(404);
                 }
             }
