@@ -142,6 +142,20 @@
                         </div>
 
                     </form>
+                    <form id="delete_{{$product->id}}" action="{{ route('owner.products.destroy',['product'=>$product->id])}}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <div class="md:px-4 py-3">
+                            <div class="p-2 w-full flex justify-around mt-32">
+
+                                                        <a
+                                                       href="#"
+                                                       data-id="{{$product->id}}"
+                                                       onclick="deletePost(this)"
+                                                    class=" text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded ">削除する</a>
+                            </div>
+                                                    </div>
+                                                </form>
 
                 </div>
             </div>
@@ -164,5 +178,12 @@ images.forEach(image => { //上で取得したタグ全てのループで回す�
     });
 });
 
-</script>
+
+        function deletePost(e){
+            'use strict';
+            if(confirm('本当に削除してもいいですか？')){
+                document.getElementById('delete_' + e.dataset.id).submit();
+            }
+        }
+    </script>
 </x-app-layout>
