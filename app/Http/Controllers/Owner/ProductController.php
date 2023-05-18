@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\ProductRequest;
+
 
 class ProductController extends Controller
 {
@@ -86,7 +88,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         // dd($request);
         $request->validate([
@@ -173,9 +175,65 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        //
+        $request->validate([
+            'current_quantity'=>'required|integer'
+        ]);
+
+        $product=Product::findOrFail($id);
+        $quantity=Stock::where('product_id',$product->id)
+        ->sum('quantity');
+
+        if($request->current_quantity!==$quantity){
+            $id=$request->route()->parameter('product');
+            return redirect()->route('owner.products.edit',['product'=>$id])
+            ->with(['message'=>'在庫数が変更されています。再度確認してください。','status'=>'alert']);
+        }
+
+        try {
+            DB::transaction(function () use ($request,$product) {
+                // $request->name;
+                $product->name = $request->name;
+                $product->information = $request->information;
+                $product->price = $request->price;
+                $product->sort_order = $request->sort_order;
+                $product->shop_id = $request->shop_id;
+                $product->secondary_category_id = $request->category;
+                $product->image1 = $request->image1;
+                $product->image2 = $request->image2;
+                $product->image3 = $request->image3;
+                $product->image4 = $request->image4;
+                $product->is_selling = $request->is_selling;
+                // dd($product->id);
+
+                $product->save();
+
+                if($request->type==='1'){
+                    $newQuantity=$request->quantity;
+                }
+                if($request->type==="2"){
+                    $newQuantity=$request->quantity*-1;
+                }
+
+                Stock::create([
+                    'product_id' => $product->id,
+                    'type' => $request->type,
+                    'quantity' => $newQuantity
+                ]);
+            }, 2);
+        } catch (Throwable $e) {
+            Log::error($e);
+            throw $e;
+        }
+
+        return redirect()->route('owner.products.index')
+        ->with([
+            'message' => '商品情報を更新しました',
+            'status' => 'info'
+        ]);
+
+
     }
 
     /**
