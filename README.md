@@ -79,3 +79,6 @@ storageフォルダにリンク後、
 
 storage/app/public/productsフォルダ内にそれらの画像を移動させることによって表示されるようになります。
 storage/app/public/productsフォルダが存在しない場合は作成してください。
+
+ショップの画像も表示する場合は、
+storage/app/public/shopsフォルダを作成し、画像を保存してください。
