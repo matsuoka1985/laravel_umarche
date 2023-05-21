@@ -2,6 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'swiper';
 
 /* @import 'tailwindcss/base';
 @import 'tailwindcss/components';

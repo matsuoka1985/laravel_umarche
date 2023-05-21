@@ -145,6 +145,11 @@
   will-change: transform;
 }
 
+.swiper-container{
+    /* width:600px; */
+    /* height:300px; */
+}
+
 /*
 ! tailwindcss v3.3.2 | MIT License | https://tailwindcss.com
 */
@@ -814,11 +819,11 @@ select{
 .ml-4{
   margin-left: 1rem;
 }
-.ml-auto{
-  margin-left: auto;
-}
 .mr-2{
   margin-right: 0.5rem;
+}
+.mr-3{
+  margin-right: 0.75rem;
 }
 .mt-1{
   margin-top: 0.25rem;
@@ -840,9 +845,6 @@ select{
 }
 .mt-8{
   margin-top: 2rem;
-}
-.mr-3{
-  margin-right: 0.75rem;
 }
 .block{
   display: block;
@@ -1252,6 +1254,9 @@ select{
 .pl-3{
   padding-left: 0.75rem;
 }
+.pr-10{
+  padding-right: 2.5rem;
+}
 .pr-4{
   padding-right: 1rem;
 }
@@ -1269,9 +1274,6 @@ select{
 }
 .pt-8{
   padding-top: 2rem;
-}
-.pr-10{
-  padding-right: 2.5rem;
 }
 .text-left{
   text-align: left;
