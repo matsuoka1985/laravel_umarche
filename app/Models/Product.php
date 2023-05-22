@@ -128,6 +128,23 @@ class Product extends Model
         return $query->where('secondary_category_id', $categoryId);
     }
 
+    public function scopeSearchKeyword($query,$keyword){
+        if(is_null($keyword)){
+            return $query;
+        }
+        
+
+        $spaceConvert = mb_convert_kana($keyword, 's');  //全角スペースを半角に
+        $keywords = preg_split('/[\s]+/', $spaceConvert, -1, PREG_SPLIT_NO_EMPTY); //半角スペース箇所を区切りに文字列を分割して配列にする。
+        foreach ($keywords as $word) {
+            $query->where('products.name', 'like', '%' . $word . '%');
+        }
+
+
+
+    }
+
+
 
 
 }

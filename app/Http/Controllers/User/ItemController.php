@@ -9,6 +9,8 @@ use App\Models\Stock;
 use App\Models\PrimaryCategory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
 
 class ItemController extends Controller
 {
@@ -30,11 +32,16 @@ class ItemController extends Controller
     }
 
     public function index(Request $request){
+        Mail::to('test@example.com')
+        // Mail::to('matsuoka1985@yahoo.co.jp')
+        ->send(new TestMail());
+
         // dd($request);
         $categories=PrimaryCategory::with('secondary')->get();
 
         $products= Product::availableItems()
         ->selectCategory($request->category ?? '0')
+        ->searchKeyword($request->keyword)
         ->sortOrder($request->sort)
         ->paginate($request->pagination ?? '20');
         return view('user.index',compact('products','categories'));
