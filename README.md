@@ -65,7 +65,43 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## udemy Laravel講座
 
+##　ダウンロード方法
+
+git clone
+
+git clone git@github.com:matsuoka1985/laravel_umarche.git
+
+git clone ブランチを指定してダウンロードする場合
+
+git clone -b ブランチ名 git@github.com:matsuoka1985/laravel_umarche.git
+
 ## インストール方法
+
+composer install
+npm install
+npm run dev
+
+.env.exampleをコピーして.envファイルを作成
+
+.envファイルの中の下記をご利用の環境に合わせて変更してください。
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_umarche
+DB_USERNAME=umarche
+DB_PASSWORD=password123
+
+DBを起動後に
+
+php artisan migrate:fresh --seed
+
+DBテーブルとダミーデータが追加されればok。
+
+最後に
+php artisan key:generateと入力してキーを生成後、
+
+php artian serveで簡易サーバーを立ち上げ、表示確認してください。
 
 ##　インストール後の実施事項
 
