@@ -787,6 +787,10 @@ select{
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
+.my-2{
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 .-ml-px{
   margin-left: -1px;
 }
@@ -852,6 +856,12 @@ select{
 }
 .mb-2{
   margin-bottom: 0.5rem;
+}
+.mr-auto{
+  margin-right: auto;
+}
+.ml-auto{
+  margin-left: auto;
 }
 .block{
   display: block;
